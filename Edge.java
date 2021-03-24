@@ -5,31 +5,31 @@
 public class Edge {
 
 	// Components of an Edge
-	public int u;
-	public int v;
+	public int source;
+	public int destination;
 	public int weight;
 
 	/*
 	 * Edge Constructor
 	 */
 	public Edge(int s, int f, int weight) {
-		this.u = s;
-		this.v = f;
+		this.source = s;
+		this.destination = f;
 		this.weight = weight;
 	}
 
 	/*
 	 * return edge source
 	 */
-	public int getFirstEndPoint() {
-		return this.u;
+	public int get_Source() {
+		return this.source;
 	}
 
 	/*
 	 * return edge destination
 	 */
-	public int getLastEndPoint() {
-		return this.v;
+	public int get_Destination() {
+		return this.destination;
 	}
 
 	/*
@@ -42,7 +42,8 @@ public class Edge {
 	/*
 	 * prints out the edge content
 	 */
-	public String Print_Edge() {
-		return "U = " + this.u + " V = " + this.v + " Weight = " + this.weight + "\n";
+	public String toString() {
+		return "source = " + this.source + "destination  = " + this.destination + " weight = " + this.weight + "."
+				+ "\n";
 	}
 }
