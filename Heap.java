@@ -1,27 +1,16 @@
-/**
- * Name: ZhaoYuan Yu ID: 250919971
- */
-
 public class Heap implements HeapADT {
 	// global variables
-
 	public int capacity, current_size;
 	public int[] index;
 	public Node[] heap;
 
-	/*
-	 * Constructor
-	 */
 	public Heap() {
-
 	}
 
 	// initializes a heap with the array keys of n elements.
-	public void heap(Node[] keys, int capacity) {
-		this.capacity = capacity;
-		// array of edges
+	public void heap(Node[] keys, int n) {
+		this.capacity = n;
 		heap = new Node[capacity + 1];
-		// array of max elements
 		index = new int[capacity];
 		heap[0] = new Node(-1, Integer.MIN_VALUE);
 		current_size = 0;
@@ -32,14 +21,11 @@ public class Heap implements HeapADT {
 
 	// returns true if the element whose id is id is in the heap;
 	public boolean in_heap(int id) {
-		// Comparison
-		// Node check = new Node(0, 0);
-		// for (Node edge : heap) {
-		// check = edge;
-		// if (check.getVertex() = key(id) && check.getDistance() = id) {
-		// return true;
-		// }
-		// }
+		for (Node node : heap) {
+			if (node.getVertex() == id) {
+				return true;
+			}
+		}
 		return false;
 	}
 
@@ -78,8 +64,39 @@ public class Heap implements HeapADT {
 		bubbleUp(i);
 	}
 
+	public boolean isEmpty() {
+		return current_size == 0;
+	}
+
+	private void sinkDown(int k) {
+		int smallest = k;
+		int leftChildIdx = 2 * k;
+		int rightChildIdx = 2 * k + 1;
+		if (leftChildIdx < Heap_Size() && heap[smallest].getDistance() > heap[leftChildIdx].getDistance()) {
+			smallest = leftChildIdx;
+		}
+		if (rightChildIdx < Heap_Size() && heap[smallest].getDistance() > heap[rightChildIdx].getDistance()) {
+			smallest = rightChildIdx;
+		}
+		if (smallest != k) {
+			Node smallestNode = heap[smallest];
+			Node kNode = heap[k];
+			// swap the positions
+			index[smallestNode.getVertex()] = k;
+			index[kNode.getVertex()] = smallest;
+			swap(k, smallest);
+			sinkDown(smallest);
+		}
+	}
+
+	private void swap(int cur_id, int parent_id) {
+		Node temp = heap[cur_id];
+		heap[cur_id] = heap[parent_id];
+		heap[parent_id] = temp;
+	}
+
 	private void insert(Node key) {
-		current_size++;
+		current_size += 1;
 		int id = current_size;
 		heap[id] = key;
 		index[key.getVertex()] = id;
@@ -92,7 +109,6 @@ public class Heap implements HeapADT {
 		while (cur_id > 0 && heap[parent_id].getDistance() > heap[cur_id].getDistance()) {
 			Node current_node = heap[cur_id];
 			Node parent_node = heap[parent_id];
-
 			// swap position
 			index[current_node.getVertex()] = parent_id;
 			index[parent_node.getVertex()] = cur_id;
@@ -102,37 +118,8 @@ public class Heap implements HeapADT {
 		}
 	}
 
-	private void swap(int cur_id, int parent_id) {
-		Node temp = heap[cur_id];
-		heap[cur_id] = heap[parent_id];
-		heap[parent_id] = temp;
-	}
-
-	private void sinkDown(int i) {
-		int min = i;
-		int left_id = 2 * i;
-		int right_id = 2 * i + 1;
-		if (left_id < Heap_Size() && heap[min].getDistance() > heap[left_id].getDistance()) {
-			min = left_id;
-		}
-		if (right_id < Heap_Size() && heap[min].getDistance() > heap[right_id].getDistance()) {
-			Node smallestNode = heap[min];
-			Node kNode = heap[i];
-
-			// swap the positions
-			index[smallestNode.getVertex()] = i;
-			index[kNode.getVertex()] = min;
-			swap(i, min);
-			sinkDown(min);
-		}
-	}
-
 	private int Heap_Size() {
 		return current_size;
-	}
-
-	public boolean isEmpty() {
-		return current_size == 0;
 	}
 
 }

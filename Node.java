@@ -8,11 +8,11 @@ public class Node implements Comparable<Node> {
 	}
 
 	public int getVertex() {
-		return vertex;
+		return this.vertex;
 	}
 
 	public int getDistance() {
-		return distance;
+		return this.distance;
 	}
 
 	public void setDistance(int distance) {
@@ -22,8 +22,9 @@ public class Node implements Comparable<Node> {
 	public int compareTo(Node that) {
 		return this.distance - that.distance;
 	}
+	//
+	// public String toString() {
+	// return "key= " + vertex + " weight=" + distance + ".";
+	// }
 
-	public String toString() {
-		return "key = " + this.vertex + ", weight = " + this.distance + "." + "\n";
-	}
 }

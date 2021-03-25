@@ -3,17 +3,14 @@ import java.io.FileNotFoundException;
 import java.util.LinkedList;
 import java.util.Scanner;
 
-/**
- * Name: ZhaoYuan Yu ID: 250919971
- */
 public class dijkstras_algorithm {
-
-	private final int num_of_vertex;
-	private final LinkedList[] adj_list;
-	private final Node[] distance;
+	public static String infile;
+	private static int num_of_vertex;
+	private static LinkedList[] adj_list;
+	private static Node[] distance;
 
 	dijkstras_algorithm(int num_of_vertex) {
-		this.num_of_vertex = num_of_vertex;
+		dijkstras_algorithm.num_of_vertex = num_of_vertex;
 		adj_list = new LinkedList[num_of_vertex + 1];
 		// initialize adjacency list
 		for (int i = 1; i <= num_of_vertex; i++) {
@@ -25,7 +22,8 @@ public class dijkstras_algorithm {
 
 	public static void main(String[] args) {
 		// Finds file, change path here to change
-		File inputGraph = new File("sssp_graph_medium.txt");
+		infile = args[0];
+		File inputGraph = new File(infile);
 		try {
 			Scanner input = new Scanner(inputGraph);
 			int numOfVertices = input.nextInt();
@@ -40,19 +38,21 @@ public class dijkstras_algorithm {
 			}
 			input.close();
 
-			System.out.println("*** input graph is: *****");
+			System.out.println("(1) Print Out Input Graph:" + "\n");
 			graph.Print_Matrix();
-			System.out.println("*************************");
+			System.out.println("*****************************************\n");
 
-			System.out.println("Doing Dijkstra from source = 1");
-			// Vertex 1 is considered as the source
-			graph.dijkstras(1);
+			System.out.println("(2) The Shortest Path Tree Edges With Shortest Path Weights: " + "\n");
+			for (int i = 1; i <= numOfVertices; i++) {
+				graph.dijkstras(i);
+				System.out.println("----------------------------------------");
+			}
 
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
-			System.out.println("File not available");
+			System.out.println("File Not Found.");
 		}
-		System.out.println("Done");
+		System.out.println("Finished.");
 	}
 
 	public void dijkstras(int source) {
@@ -66,6 +66,7 @@ public class dijkstras_algorithm {
 
 		// initialize heap
 		Heap minHeap = new Heap();
+		minHeap.heap(distance, distance.length);
 
 		while (!minHeap.isEmpty()) {
 			// delete the min
@@ -77,6 +78,7 @@ public class dijkstras_algorithm {
 			LinkedList<Edge> edges = adj_list[u.getVertex()];
 			for (Edge e : edges) {
 				int destination = e.get_Destination();
+
 				if (!visited[destination]) {
 					int currDist = distance[destination].getDistance();
 					int newDist = distance[u.getVertex()].getDistance() + e.getWeight();
@@ -92,21 +94,19 @@ public class dijkstras_algorithm {
 	}
 
 	public void Print_Path(Node[] distance, int source) {
-		System.out.println("Dijkstra Algorithm: (Adjacency List + Min minHeap)");
-		for (int i = 1; i < num_of_vertex + 1; i++) {
-			System.out.println(
-					"Source Vertex: " + source + " to vertex " + i + " distance: " + distance[i].getDistance());
+		for (int i = 1; i <= num_of_vertex; i++) {
+			System.out.println("(" + source + "," + i + ") : " + distance[i].getDistance());
 		}
 	}
 
 	public void Print_Matrix() {
 		for (int i = 1; i < adj_list.length; i++) {
 			LinkedList<Edge> edges = adj_list[i];
-			System.out.print("vertex " + i + "=>");
+			System.out.print("vertex " + i + ":" + "\n");
 			for (Edge e : edges) {
-				System.out.print(e + " ");
+				System.out.print(e);
 			}
-			System.out.println(" ");
+			System.out.println("-----------------------------------------");
 		}
 	}
 

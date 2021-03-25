@@ -1,13 +1,9 @@
-/**
- * Name: ZhaoYuan Yu ID: 250919971
- */
-
 public class Edge {
 
 	// Components of an Edge
-	public int source;
-	public int destination;
-	public int weight;
+	private final int source;
+	private final int destination;
+	private final int weight;
 
 	/*
 	 * Edge Constructor
@@ -43,7 +39,7 @@ public class Edge {
 	 * prints out the edge content
 	 */
 	public String toString() {
-		return "source = " + this.source + "destination  = " + this.destination + " weight = " + this.weight + "."
+		return "source = " + this.source + "  destination = " + this.destination + " weight = " + this.weight + "."
 				+ "\n";
 	}
 }

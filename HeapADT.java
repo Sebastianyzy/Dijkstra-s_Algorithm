@@ -1,14 +1,6 @@
-/**
- * Name: ZhaoYuan Yu ID: 250919971
- */
-
 public interface HeapADT {
-
 	// initializes a heap with the array keys of n elements.
 	void heap(Node[] keys, int n);
-
-	// returns true if the element whose id is id is in the heap;
-	boolean in_heap(int id);
 
 	// returns the minimum key of the heap;
 	Node min_key();
